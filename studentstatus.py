@@ -16,4 +16,4 @@ class StudentStatus(Student):
         if cls.count == 0:
             return 0
         else:
-            return f"Average gpa: {cls.total_gpa / cls.count:.2f} and {cls.get_count()}"
+            return f"Average gpa: {cls.total_gpa / cls.count:.2f} And There Is {cls.count} Student"
