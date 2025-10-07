@@ -10,7 +10,7 @@ class StudentStatus(Student):
         else:
             return 0
         
-    #polymorphism: same class method as the parent class, but this method also calls the get_count method.
+    #polymorphism: same class method as the parent class, but this method also calls the cls.count method.
     @classmethod
     def get_average_gpa(cls):
         if cls.count == 0:
