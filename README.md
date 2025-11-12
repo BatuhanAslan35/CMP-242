@@ -1,5 +1,3 @@
-THANK YOU, BATUHAN ASLAN, FOR UNDERSTANDING THESE CONCEPTS OF OOP. PLEASE, WHAT IS YOUR PROJECT IDEA? AND IN WHICH FILE DO SAVE IT???
-
 # CMP-242: Object-Oriented Programming 2 – My Work So Far
 
 This document summarizes my activities and learning in **CMP-242: Object Oriented Programming 2** during the first semester of the second year. It presents the exercises and in-class applications I have completed so far, as well as projects that will be implemented as part of the course.
