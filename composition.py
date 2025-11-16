@@ -1,4 +1,3 @@
-# Batuhan, where is the file for your project idea???
 # We're creating a simple Engine class
 class Engine:
     def __init__(self, horsepower):
