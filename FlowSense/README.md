@@ -8,7 +8,7 @@ FlowSense is a software system that simulates urban traffic flow and generates a
 
 > This FlowSense simulation system was developed as a collaborative effort.
 >
-> The core architectural design, data modeling, and class hierarchy were conceptualized and structured by **[Your Name/Student ID]**. This primary work included the definition and coding of all main classes, such as `TrafficZone`, `Vehicle`, `SpeedSensor`, `DensitySensor`, `AlertSystem`, and the `TrafficLogger` (which handles all file I/O operations). This formed the complete foundation of the object-oriented design.
+> The core architectural design, data modeling, and class hierarchy were conceptualized and structured by **Batuhan Aslan**. This primary work included the definition and coding of all main classes, such as `TrafficZone`, `Vehicle`, `SpeedSensor`, `DensitySensor`, `AlertSystem`, and the `TrafficLogger` (which handles all file I/O operations). This formed the complete foundation of the object-oriented design.
 >
 > Assistance from the Gemini AI was utilized for specific implementation tasks and refinement. This support included helping to structure the main simulation `for` loop in `main.py` and refining the internal logic for some of the more complex interactions, such as the vehicle update simulation and the risk-detection rules.
 
