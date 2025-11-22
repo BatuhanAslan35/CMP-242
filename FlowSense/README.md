@@ -1,3 +1,10 @@
+Batuhan I checked the speed_sensor.py file here is my opinion. Once i finish the remaining i will sechdule our meeting regarding your project. 
+
+# WHY WILL THE SENSOR DIRECTLY ACCESS (VEHICLE)? SENSOR SHOULD ONLY REPORT. 
+# BATUHAN THIS MIGHT BE MISINTERPRETED AS ACTUAL DATA ESPECIALLY IF VEHICLES
+# CONTAINS A NONE VALUES OR NON-VEHICLE, I SUGGEST YOU CONSIDER RETURNING AN EMPTY LIST []
+# THE SENSOR SHOULD ONLY COLLECT DATA, NOT TO MAKE DECISIONS REGARDING THE REASON FOR A STALLED VEHICLE. THAT SHOULD BE DONE IN 'TrafficAnalyzer' CLASS.
+
 # FlowSense: Intelligent Traffic Monitoring System
 
 FlowSense is a software system that simulates urban traffic flow and generates alerts based on certain conditions. The system collects speed and density data through sensor objects, analyzes it, and identifies potential risk situations. This project was designed to demonstrate key object-oriented programming concepts for an OOP II course.
