@@ -2,6 +2,7 @@ import random
 from vehicle import Vehicle
 from speed_sensor import SpeedSensor
 from density_sensor import DensitySensor
+from traffic_analyzer import TrafficAnalyzer
 from traffic_logger import TrafficLogger
 
 # Manages a specific urban area and its internal sensors.
@@ -19,6 +20,7 @@ class TrafficZone:
         # OOP: Composition - The TrafficZone 'has-a' relationship with its sensors
         self.speed_sensor = SpeedSensor(self.zone_id)
         self.density_sensor = DensitySensor(self.zone_id, capacity)
+        self.analyzer = TrafficAnalyzer()
 
     # Adds a new vehicle to the zone (simulation).
     def _add_vehicle(self):
@@ -58,16 +60,25 @@ class TrafficZone:
     def analyze_zone(self):
         
         # Collect data from sensors
-        avg_speed = self.speed_sensor.collect_data(self.vehicles)
-        vehicle_count = self.density_sensor.collect_data(self.vehicles)
+        # Extract raw speeds to pass to the sensor (Decoupling)
+        # HOCANIN ISTEDIGI DUZELTME BURADA:
+        raw_speeds = [v.speed for v in self.vehicles]
+        
+        # Artık 'collect_data' değil, 'calculate_average_speed' çağırıyoruz:
+        avg_speed = self.speed_sensor.calculate_average_speed(raw_speeds)
+        
+        vehicle_count = self.density_sensor.measure_count(self.vehicles)
         
         # Analyze risks
-        stalled_vehicles = self.speed_sensor.detect_stalled_vehicle(self.vehicles)
-        accident_risk = self.density_sensor.detect_accident_risk(vehicle_count, avg_speed)
+        # Use TrafficAnalyzer to find stalled vehicles
+        stalled_vehicles = self.analyzer.identify_stalled_vehicles(self.vehicles)
         
         # Get density percentage for the report
-        density_percent = self.density_sensor.get_density_percent(vehicle_count)
+        density_percent = self.density_sensor.calculate_density_percentage(vehicle_count)
 
+        # Use TrafficAnalyzer to evaluate accident risk
+        accident_risk = self.analyzer.evaluate_accident_risk(density_percent, avg_speed)
+        
         # Return the analysis result as a report
         report = {
             "zone_id": self.zone_id,
