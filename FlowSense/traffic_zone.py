@@ -63,7 +63,6 @@ class TrafficZone:
         # Extract raw speeds to pass to the sensor (Decoupling)
         raw_speeds = [v.speed for v in self.vehicles]
         
-        # Artık 'collect_data' değil, 'calculate_average_speed' çağırıyoruz:
         avg_speed = self.speed_sensor.calculate_average_speed(raw_speeds)
         
         vehicle_count = self.density_sensor.measure_count(self.vehicles)
