@@ -1,4 +1,4 @@
-03.12.2025
+##03.12.2025
 WHY WILL THE SENSOR DIRECTLY ACCESS (VEHICLE)? SENSOR SHOULD ONLY REPORT.
 What I changed: I realized that passing the whole Vehicle object to the sensor created a dependency that wasn't necessary. The sensor doesn't need to know the car's ID or other properties; it just needs the numbers.
 
@@ -17,3 +17,8 @@ The Fix: I created a brand new class called TrafficAnalyzer.
 Old way: The SpeedSensor decided if a car was "stalled."
 
 New way: The SpeedSensor only calculates averages. I moved all the "decision" logic (detecting stalled cars, calculating accident risks) into TrafficAnalyzer. The TrafficZone now asks the Sensor for the numbers, and then asks the Analyzer what those numbers mean.
+
+##07.12.2025
+Feature: Added Iterators and Generators to TrafficZone
+- Made TrafficZone iterable using __iter__; we can now loop over the object directly without touching internal lists.
+- Implemented a generator with 'yield' to manage vehicle entry. This simulates realistic traffic waves (like rush hour bursts) and improves memory usage by generating flow states on demand.
