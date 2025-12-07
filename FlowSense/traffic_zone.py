@@ -21,8 +21,36 @@ class TrafficZone:
         self.speed_sensor = SpeedSensor(self.zone_id)
         self.density_sensor = DensitySensor(self.zone_id, capacity)
         self.analyzer = TrafficAnalyzer()
+        
+        # Initialize the continuous traffic flow generator
+        self.traffic_stream = self._traffic_flow_generator()
 
-    # Adds a new vehicle to the zone (simulation).
+    # Makes the TrafficZone object iterable, allowing direct loops over vehicles.
+    def __iter__(self):
+        return iter(self.vehicles)
+
+    # Allows using len() directly on the TrafficZone object.
+    def __len__(self):
+        return len(self.vehicles)
+
+    # Generator function that yields traffic entry signals based on probability.
+    def _traffic_flow_generator(self):
+        while True:
+            rand_val = random.random()
+            
+            # High density flow: burst of vehicles
+            if rand_val < 0.1:
+                # Yield multiple entry signals consecutively
+                for _ in range(3):
+                    yield True
+            # Normal flow: single vehicle
+            elif rand_val < 0.4:
+                yield True
+            # Low flow: no vehicle
+            else:
+                yield False
+
+    # Adds a new vehicle to the zone.
     def _add_vehicle(self):
         if len(self.vehicles) < self.capacity:
             TrafficZone._vehicle_counter += 1
@@ -30,10 +58,10 @@ class TrafficZone:
             new_vehicle = Vehicle(new_vehicle_id)
             self.vehicles.append(new_vehicle)
             
-            # Desired logging: Every entering vehicle is logged
+            # Log the entry event
             self.logger.log_vehicle_entry(new_vehicle, self.zone_id)
 
-    # Removes a random vehicle from the zone (simulation).
+    # Removes a random vehicle from the zone.
     def _remove_vehicle(self):
         if self.vehicles:
             # Remove a random vehicle from the list
@@ -42,42 +70,41 @@ class TrafficZone:
     # Runs one step of the simulation for this zone.
     def update_simulation(self):
         
-        # 1. Update vehicle speeds
-        for v in self.vehicles:
+        # Update speed for all vehicles using the class iterator
+        for v in self:
             v.update_speed()
             
-        # 2. Simulate random vehicle entry/exit
-        # 50% chance for a new vehicle to enter
-        if random.random() < 0.5:
+        # Determine vehicle entry using the generator stream
+        should_add_vehicle = next(self.traffic_stream)
+        if should_add_vehicle:
             self._add_vehicle()
         
-        # 20% chance for a vehicle to leave
+        # Simulate random vehicle exit
         if random.random() < 0.2:
             self._remove_vehicle()
 
-    # Collects data from all sensors, analyzes it, 
-    # and returns a report (dictionary).
+    # Collects data from all sensors, analyzes it, and returns a report.
     def analyze_zone(self):
         
-        # Collect data from sensors
-        # Extract raw speeds to pass to the sensor (Decoupling)
-        raw_speeds = [v.speed for v in self.vehicles]
+        # Extract raw speeds using list comprehension over the object itself
+        raw_speeds = [v.speed for v in self]
         
+        # Calculate average speed using the sensor
         avg_speed = self.speed_sensor.calculate_average_speed(raw_speeds)
         
+        # Measure vehicle count using the sensor
         vehicle_count = self.density_sensor.measure_count(self.vehicles)
         
-        # Analyze risks
-        # Use TrafficAnalyzer to find stalled vehicles
+        # Identify stalled vehicles using the analyzer
         stalled_vehicles = self.analyzer.identify_stalled_vehicles(self.vehicles)
         
-        # Get density percentage for the report
+        # Calculate density percentage
         density_percent = self.density_sensor.calculate_density_percentage(vehicle_count)
 
-        # Use TrafficAnalyzer to evaluate accident risk
+        # Evaluate accident risk using the analyzer
         accident_risk = self.analyzer.evaluate_accident_risk(density_percent, avg_speed)
         
-        # Return the analysis result as a report
+        # Compile the report
         report = {
             "zone_id": self.zone_id,
             "vehicle_count": vehicle_count,
