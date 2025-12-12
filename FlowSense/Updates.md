@@ -24,3 +24,18 @@ New way: The SpeedSensor only calculates averages. I moved all the "decision" lo
 Feature: Added Iterators and Generators to TrafficZone
 - Made TrafficZone iterable using __iter__; we can now loop over the object directly without touching internal lists.
 - Implemented a generator with 'yield' to manage vehicle entry. This simulates realistic traffic waves (like rush hour bursts) and improves memory usage by generating flow states on demand.
+
+-
+12.12.2025
+
+## 🌟 Major Architecture Update: Design Patterns
+
+Added **Singleton** and **Factory** design patterns to make the system more robust and scalable.
+
+### 1. Singleton Pattern (`TrafficLogger`)
+* **Why?** We realized that having multiple logger instances could cause issues with the log file (like overwriting headers).
+* **Change:** Modified `TrafficLogger` using `__new__` to ensure that only **one single instance** of the logger exists throughout the entire application lifecycle, no matter how many times we call it.
+
+### 2. Factory Pattern (`SensorFactory`)
+* **Why?** The `TrafficZone` class was too tightly coupled to specific sensor classes (`SpeedSensor`, `DensitySensor`). If we wanted to add a `WeatherSensor`, we had to modify `TrafficZone`.
+* **Change:** Created a `SensorFactory` class. Now `TrafficZone` just asks the factory for a "speed" or "density" sensor, and the factory handles the instantiation details. This improves **Encapsulation** and adheres to the **Open/Closed Principle**.
