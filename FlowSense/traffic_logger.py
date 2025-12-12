@@ -1,10 +1,22 @@
 import datetime
 
 # Logs simulation events to a .txt file.
+# Implements Singleton Pattern: Ensures only one Logger instance exists.
 class TrafficLogger:
     
-    def __init__(self, filename="traffic_log.txt"):
-        self.filename = filename
+    _instance = None
+
+    def __new__(cls, filename="traffic_log.txt"):
+        # Check if an instance already exists
+        if cls._instance is None:
+            # Create the instance if it doesn't exist
+            cls._instance = super(TrafficLogger, cls).__new__(cls)
+            cls._instance.filename = filename
+            cls._instance._initialize_file()
+        return cls._instance
+
+    def _initialize_file(self):
+        """Initializes the log file (runs only once)."""
         # Clear the file on start and add a header
         try:
             with open(self.filename, 'w', encoding='utf-8') as f:
