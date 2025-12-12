@@ -1,7 +1,7 @@
 import random
 from vehicle import Vehicle
-from speed_sensor import SpeedSensor
-from density_sensor import DensitySensor
+# Uses Factory Pattern to create sensors instead of direct instantiation
+from sensor_factory import SensorFactory
 from traffic_analyzer import TrafficAnalyzer
 from traffic_logger import TrafficLogger
 
@@ -18,8 +18,10 @@ class TrafficZone:
         self.capacity = capacity
         
         # OOP: Composition - The TrafficZone 'has-a' relationship with its sensors
-        self.speed_sensor = SpeedSensor(self.zone_id)
-        self.density_sensor = DensitySensor(self.zone_id, capacity)
+        # FACTORY PATTERN: Use the factory to create sensors
+        self.speed_sensor = SensorFactory.create_sensor("speed", self.zone_id)
+        self.density_sensor = SensorFactory.create_sensor("density", self.zone_id, capacity)
+        
         self.analyzer = TrafficAnalyzer()
         
         # Initialize the continuous traffic flow generator
