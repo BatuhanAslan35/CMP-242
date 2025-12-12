@@ -25,6 +25,8 @@ Feature: Added Iterators and Generators to TrafficZone
 - Made TrafficZone iterable using __iter__; we can now loop over the object directly without touching internal lists.
 - Implemented a generator with 'yield' to manage vehicle entry. This simulates realistic traffic waves (like rush hour bursts) and improves memory usage by generating flow states on demand.
 
+
+
 -
 12.12.2025
 
