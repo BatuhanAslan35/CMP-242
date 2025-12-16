@@ -1,5 +1,0 @@
---- FlowSense Traffic Log Initialized: 2025-11-12 19:59:16.916872 ---
-
-[2025-11-12 19:59:16] [ZONE: Zone-B (City Center)] [ENTRY] Vehicle(ID: VEH-1, Speed: 42 km/h)
-[2025-11-12 19:59:18] [ZONE: Zone-A (Highway)] [ENTRY] Vehicle(ID: VEH-2, Speed: 76 km/h)
-[2025-11-12 19:59:18] [ZONE: Zone-B (City Center)] [ENTRY] Vehicle(ID: VEH-3, Speed: 9 km/h)
