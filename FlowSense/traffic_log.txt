@@ -1,0 +1,8 @@
+--- FlowSense Traffic Log Initialized: 2025-12-16 14:06:39.882578 ---
+
+[2025-12-16 14:06:41] [ZONE: Zone-A (Highway)] [ENTRY] Vehicle(ID: VEH-1, Speed: 82 km/h)
+[2025-12-16 14:06:41] [ZONE: Zone-B (City Center)] [ENTRY] Vehicle(ID: VEH-2, Speed: 11 km/h)
+[2025-12-16 14:06:45] [ZONE: Zone-B (City Center)] [ENTRY] Vehicle(ID: VEH-3, Speed: 6 km/h)
+[2025-12-16 14:06:47] [ZONE: Zone-B (City Center)] [EMERGENCY] STALLED VEHICLE DETECTED! 1 vehicles stopped.
+[2025-12-16 14:06:49] [ZONE: Zone-A (Highway)] [ENTRY] Vehicle(ID: VEH-4, Speed: 17 km/h)
+[2025-12-16 14:06:49] [ZONE: Zone-B (City Center)] [EMERGENCY] STALLED VEHICLE DETECTED! 1 vehicles stopped.
