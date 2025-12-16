@@ -51,3 +51,15 @@ Added **Singleton** and **Factory** design patterns to make the system more robu
 #### 2. Factory Pattern (`SensorFactory`)
 * **Why?** The `TrafficZone` class was too tightly coupled to specific sensor classes (`SpeedSensor`, `DensitySensor`). If we wanted to add a `WeatherSensor`, we had to modify `TrafficZone`.
 * **Change:** Created a `SensorFactory` class. Now `TrafficZone` just asks the factory for a "speed" or "density" sensor, and the factory handles the instantiation details. This improves **Encapsulation** and adheres to the **Open/Closed Principle**.
+
+---
+
+## 📦 Packaging and Modularization Update
+
+### 1. Modularization
+* The project was already highly modular, with separate classes for `Sensors`, `Zones`, `Vehicles`, and `Loggers` residing in individual files. This adheres to the **Separation of Concerns** principle.
+
+### 2. Packaging (`setup.py` & `__init__.py`)
+* **Restructuring:** Moved all core source files into a dedicated `flowsense/` package directory to separate the application logic from the execution script (`main.py`).
+* **`__init__.py`:** Added an initialization file to define the directory as a Python package and expose the main `FlowSenseSystem` class for cleaner imports.
+* **`setup.py`:** Created a standard setup script using `setuptools`. This allows the FlowSense system to be distributed and installed as a library using `pip install .`, making it a fully portable Python project.
