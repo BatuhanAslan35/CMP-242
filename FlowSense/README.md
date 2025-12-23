@@ -58,6 +58,10 @@ This project has been engineered to demonstrate every concept covered in the OOP
 ### 9. Packaging and Modularization
 * **Modular Structure:** The code is separated into logical modules (`vehicle.py`, `traffic_zone.py`, etc.) inside a dedicated `flowsense/` package directory.
 * **Installability:** A `setup.py` file is included, allowing the entire project to be installed as a standard library using `pip install .`.
+---
+
+### 📝 Note on Documentation & Language
+To ensure clarity, precision, and a high academic standard in the written presentation, **Gemini AI** was utilized to draft and polish the English documentation (including this README, changelogs, and code comments). This approach was adopted to maintain a professional tone and ensure that the technical concepts are explained as clearly as possible.
 
 ---
 
