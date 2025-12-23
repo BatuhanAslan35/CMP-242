@@ -1,49 +1,68 @@
 # FlowSense: Intelligent Traffic Monitoring System
 
-FlowSense is a software system that simulates urban traffic flow and generates alerts based on certain conditions. The system collects speed and density data through sensor objects, analyzes it, and identifies potential risk situations. This project was designed to demonstrate key object-oriented programming concepts for an OOP II course.
+FlowSense is a modular, object-oriented Python library designed to simulate urban traffic flow, analyze density data, and generate risk alerts. It serves as a comprehensive implementation of advanced OOP principles, design patterns, and modern software packaging standards.
 
 ---
 
-## Project Contribution Acknowledgement
+## 👨‍💻 Project Contribution & Development Workflow
 
-> This FlowSense simulation system was developed as a collaborative effort.
->
-> The core architectural design, data modeling, and class hierarchy were conceptualized and structured by **Batuhan Aslan**. This primary work included the definition and coding of all main classes, such as `TrafficZone`, `Vehicle`, `SpeedSensor`, `DensitySensor`, `AlertSystem`, and the `TrafficLogger` (which handles all file I/O operations). This formed the complete foundation of the object-oriented design.
->
-> Assistance from the Gemini AI was utilized for specific implementation tasks and refinement. This support included helping to structure the main simulation `for` loop in `main.py` and refining the internal logic for some of the more complex interactions, such as the vehicle update simulation and the risk-detection rules.
+> **Transparency Note:** This project represents a collaborative development process where the core implementation belongs to the student, supported by AI tools for optimization and structuring.
+
+### 🧠 Lead Developer: **Batuhan Aslan**
+**Batuhan** is the primary author of the codebase. His contributions include:
+* **Core Implementation:** Wrote the fundamental logic for the `Vehicle`, `TrafficZone`, and `AlertSystem` classes.
+* **Algorithm Design:** Developed the mathematical logic for calculating average speeds, density percentages, and accident risk probabilities.
+* **System Architecture:** Designed the class hierarchy and relationships (Composition over Inheritance) as visualized in the UML diagrams.
+* **Simulation Logic:** Constructed the main simulation loop and the interaction flow between zones and the central system.
+
+### 🤖 Development Assistant: **Gemini AI**
+**Gemini** acted as a technical consultant and refactoring tool. Its contributions were limited to:
+* **Refactoring:** Assisting in decoupling the `TrafficAnalyzer` from sensors to adhere to the *Single Responsibility Principle (SRP)*.
+* **Packaging Support:** Generating the standard `setup.py` and `__init__.py` boilerplate to convert the scripts into an installable Python package.
+* **Debugging:** Identifying and resolving specific `ModuleNotFoundError` issues during the modularization phase.
 
 ---
 
-## OOP II Concepts Applied
+## 📚 OOP II Concepts Applied (Course Syllabus Mapping)
 
-Here is a breakdown of how the OOP concepts from the course are applied within the FlowSense project:
+This project has been engineered to demonstrate every concept covered in the OOP II curriculum:
 
-### 1. Review of OOP I (Encapsulation, Abstraction)
+### 1. Review of OOP I
+* **Encapsulation:** All critical data (e.g., `self.vehicles` list in `TrafficZone`) is encapsulated. Access is controlled via methods, not direct modification.
+* **Abstraction:** The `FlowSenseSystem` provides a high-level interface (`run_simulation_step`), hiding the complex complexity of sensor measurements and data analysis occurring inside each zone.
 
-* **Encapsulation:** This is demonstrated in nearly every class. For example, the `TrafficZone` class encapsulates its own list of `vehicles`. Other classes cannot access this list directly. Similarly, the `Vehicle` class encapsulates its `self.speed`, which is only modified internally by its own `update_speed()` method.
-* **Abstraction:** This is a core principle. The `FlowSenseSystem` class is an abstraction. It operates on `TrafficZone` objects without needing to know the *internal details* of how a zone analyzes data. Likewise, the `TrafficZone` abstracts the sensors; it simply calls `speed_sensor.collect_data()` without knowing the complex calculations inside.
-* **Inheritance & Polymorphism:** These concepts were not explicitly used, as we favored Composition.
+### 2. Static/Class Methods & Class Variables
+* **Class Variables:** We utilized `_vehicle_counter` in the `TrafficZone` class. This variable is shared across all instances to ensuring every vehicle generated in the simulation gets a unique, sequential ID (e.g., VEH-1, VEH-2).
 
-### 2. Static/Class Methods & Class/Instance variables
+### 3. Operator Overloading (Special Methods)
+* **`__str__`:** The `Vehicle` class implements the `__str__` magic method. This allows us to pass a vehicle object directly to the print function or logger (e.g., `logger.log(vehicle)`), resulting in a readable string representation automatically.
 
-* **Instance Variables:** These are used extensively. `self.zone_id` (in `TrafficZone`), `self.speed` (in `Vehicle`), and `self.logger` (in `AlertSystem`) are all instance variables, meaning each object gets its own unique copy.
-* **Class Variables:** We have a clear example of a class variable in `TrafficZone`: the `_vehicle_counter`. This variable is shared across *all* instances of `TrafficZone` to ensure that every vehicle in the simulation gets a unique ID.
-* **Static & Class Methods:** We did not use `@staticmethod` or `@classmethod` in this project.
-
-### 3. Introduction to Operator Overloading (Special Methods)
-
-* Yes, this concept is used. The `Vehicle` class implements the special method `__str__(self)`. This is a form of operator overloading that changes how the `str()` function or `print()` command behaves with a `Vehicle` object, allowing `TrafficLogger` to write a clean, readable string to the log file.
-
-### 4. Composition vs Inheritance
-
-* This is the **most important design principle** in the FlowSense project. We explicitly chose **Composition over Inheritance**.
-* A `TrafficZone` *does not* inherit from `SpeedSensor`; instead, it *has-a* `SpeedSensor` and *has-a* `DensitySensor` as instance variables. This is a powerful, flexible design that allows for easy future expansion (e.g., adding a `WeatherSensor`).
+### 4. Composition vs. Inheritance
+* **Design Choice:** The project strictly follows **Composition over Inheritance**.
+* **Implementation:** As seen in our UML diagrams, a `TrafficZone` *IS NOT* a Sensor. Instead, it *HAS* a `SpeedSensor` and *HAS* a `DensitySensor`. This makes the system flexible and easier to maintain.
 
 ### 5. Exception Handling
-
-* This is demonstrated clearly in the `TrafficLogger` class. Both the `__init__` and `_log` methods are wrapped in `try...except IOError` blocks. This is a robust way to prevent the entire simulation from crashing if the `traffic_log.txt` file is locked or if the program lacks write permission.
+* **Robustness:** The `TrafficLogger` class wraps file I/O operations in `try...except` blocks. This ensures the simulation does not crash if the log file is currently open by another program or if there are permission errors.
 
 ### 6. File Handling & Object Persistence
+* **Logging:** The system implements a persistent log via `TrafficLogger`. It creates and appends to a `traffic_log.txt` file, recording every vehicle entry and risk alert with precise timestamps.
 
-* **File Handling:** This is the primary responsibility of the `TrafficLogger` class. It uses Python's built-in `open()` function in both write (`'w'`) mode (to initialize the log) and append (`'a'`) mode (to add new entries).
-* **Object Persistence:** The project does *not* use full object persistence. We are *logging* the *string representation* of objects, not serializing the objects themselves (e.g., using `pickle` or `json.dump`) to reload the simulation state.
+### 7. Iterators and Generators
+* **Iterators:** The `TrafficZone` class implements `__iter__`. This allows the system to loop directly over a zone object (`for vehicle in zone:`) to update speeds, making the code cleaner.
+* **Generators:** A custom generator using the `yield` keyword manages vehicle creation. Instead of creating a massive list of cars at once, it generates traffic "waves" on demand, simulating realistic flow.
+
+### 8. Design Patterns
+* **Singleton Pattern:** Applied to the `TrafficLogger` class. We used `__new__` to ensure that only **one** logger instance exists, preventing file access conflicts.
+* **Factory Pattern:** Applied via `SensorFactory`. The `TrafficZone` does not instantiate specific sensor classes directly; it asks the factory to create them, adhering to the Open/Closed Principle.
+
+### 9. Packaging and Modularization
+* **Modular Structure:** The code is separated into logical modules (`vehicle.py`, `traffic_zone.py`, etc.) inside a dedicated `flowsense/` package directory.
+* **Installability:** A `setup.py` file is included, allowing the entire project to be installed as a standard library using `pip install .`.
+
+---
+
+## 📦 Installation & Usage
+
+**To install the library:**
+```bash
+pip install .
